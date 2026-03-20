@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Slime Roguelite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2330;
+      --accent: #7ee8a2;
+      --accent2: #56cfdf;
+      --accent3: #b8f7d0;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --border: #30363d;
+      --glow: rgba(126, 232, 162, 0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(126,232,162,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(86,207,223,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+
+    .slime-icon {
+      font-size: 72px;
+      line-height: 1;
+      margin-bottom: 20px;
+      display: block;
+      animation: wobble 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(126,232,162,0.4));
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: scaleX(1) scaleY(1); }
+      25% { transform: scaleX(1.08) scaleY(0.94); }
+      50% { transform: scaleX(0.95) scaleY(1.06); }
+      75% { transform: scaleX(1.04) scaleY(0.97); }
+    }
+
+    header h1 {
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* Nav pills */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--glow);
+    }
+
+    /* Section */
+    section {
+      margin-bottom: 52px;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    section h2 {
+      font-size: 1.55rem;
+      font-weight: 900;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    details {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    details:hover, details[open] {
+      border-color: rgba(126, 232, 162, 0.4);
+    }
+
+    details[open] {
+      background: var(--surface2);
+    }
+
+    summary {
+      padding: 18px 22px;
+      font-weight: 700;
+      font-size: 0.97rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details p {
+      padding: 0 22px 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.93rem;
+    }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .contact-icon {
+      font-size: 2.4rem;
+      flex-shrink: 0;
+    }
+
+    .contact-card h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #0d1117;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    /* Known issues */
+    .issue-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .issue-list li {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .badge {
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      font-family: 'Space Mono', monospace;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .badge.ok { background: rgba(126,232,162,0.15); color: var(--accent); }
+    .badge.wip { background: rgba(251,188,5,0.15); color: #fbc005; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 540px) {
+      header h1 { font-size: 2rem; }
+      .contact-card { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <span class="slime-icon">🟢</span>
+    <h1>Game Support</h1>
+    <p>Having trouble? We've got you covered.</p>
+    <nav>
+      <a href="#faq">FAQ</a>
+      <a href="#known-issues">Known Issues</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <p class="section-label">// help</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+
+      <details>
+        <summary>The game won't launch. What should I do?</summary>
+        <p>Make sure your drivers are up to date and that your system meets the minimum requirements. Try verifying the game files via Steam (Right-click the game → Properties → Local Files → Verify integrity of game files).</p>
+      </details>
+
+      <details>
+        <summary>My save file is missing or corrupted.</summary>
+        <p>Save files are stored in <code>%AppData%\[GameName]</code> on Windows. If a save is corrupted, you can delete the file there and start fresh. We recommend backing up this folder regularly.</p>
+      </details>
+
+      <details>
+        <summary>The game crashes mid-run. How do I report it?</summary>
+        <p>Please send a bug report to the contact email below with your system specs and a description of what happened. If possible, include the output_log.txt from the game's installation folder.</p>
+      </details>
+
+      <details>
+        <summary>I found a bug or want to give feedback.</summary>
+        <p>All bug reports and feedback are welcome! Use the contact form below or reach out via the Steam community hub. Your input directly shapes development.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- Known Issues -->
+  <section id="known-issues">
+    <p class="section-label">// status</p>
+    <h2>Known Issues</h2>
+    <ul class="issue-list">
+      <li>
+        <span class="badge ok">FIXED</span>
+        <span>Placeholder — no known critical issues at this time. This page will be updated as the game develops.</span>
+      </li>
+      <li>
+        <span class="badge wip">WIP</span>
+        <span>Game is currently in development. Some features may be incomplete or subject to change.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <p class="section-label">// contact</p>
+    <h2>Get in Touch</h2>
+    <div class="contact-card">
+      <span class="contact-icon">✉️</span>
+      <div>
+        <h3>Email Support</h3>
+        <p>For bug reports, refund questions, or anything else — send an email and we'll get back to you as soon as possible.</p>
+        <!-- TODO: 이메일 주소 교체 -->
+        <a class="btn" href="mailto:your@email.com">Send an Email</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Made with <span>♥</span> by [Your Name / Studio Name] · <a href="https://store.steampowered.com" style="color:var(--muted);">Steam Page</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
